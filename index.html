@@ -25,9 +25,19 @@
     <button type="submit">Generate</button>
   </form>
 
-  <div id="usage" class="warning"></div>
-  <h3>Result:</h3>
-  <pre id="result"></pre>
+ <div id="usage" class="warning"></div>
+
+<h3>Result:</h3>
+
+<h4>Description:</h4>
+<p id="desc"></p>
+
+<h4>Hashtags:</h4>
+<p id="hashtags"></p>
+
+<h4>YouTube Tags:</h4>
+<p id="ytTags"></p>
+
 
   <script>
     const form = document.getElementById('seoForm');
@@ -65,7 +75,11 @@
         });
 
         const data = await response.json();
-        resultEl.textContent = JSON.stringify(data, null, 2);
+
+document.getElementById('desc').textContent = data.description || "No description generated";
+document.getElementById('hashtags').textContent = (data.hashtags || ["#default"]).join(", ");
+document.getElementById('ytTags').textContent = (data.tags || ["default"]).join(", ");
+
 
       } catch(err) {
         resultEl.textContent = "Error: Could not generate content. Please try again.";
@@ -75,3 +89,4 @@
   </script>
 </body>
 </html>
+
